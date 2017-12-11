@@ -395,6 +395,12 @@ internal class LinkStage(val context: Context) {
         if (platform is WasmPlatform) {
             JavaScriptLinker(includedBinaries.filter{it.isJavaScript}, executable)
         }
+        if (platform is MingwPlatform && dynamic) {
+            val defFile = context.config.tempFiles.cAdapterDef
+            val writer = defFile.printWriter()
+            writer.println("EXPORTS\n${context.config.moduleId}_symbols")
+            writer.close()
+        }
         return executable
     }
 
