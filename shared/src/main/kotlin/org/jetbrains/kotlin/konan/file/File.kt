@@ -150,6 +150,12 @@ data class File constructor(internal val javaPath: Path) {
             get() = File(System.getProperty("java.home"))
 
     }
+
+    fun readStrings(): List<String> {
+        val strings = mutableListOf<String>()
+        forEachLine { strings.add(it) }
+        return strings
+    }
 }
 
 fun String.File(): File = File(this)
